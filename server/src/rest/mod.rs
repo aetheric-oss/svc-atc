@@ -19,7 +19,7 @@ use utoipa::OpenApi;
         )
     ),
     tags(
-        (name = "svc-template-rust", description = "svc-template-rust REST API")
+        (name = "svc-atc", description = "svc-atc REST API")
     )
 )]
 struct ApiDoc;
