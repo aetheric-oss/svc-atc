@@ -1,4 +1,4 @@
-# Interface Control Document (ICD) - `svc-FIXME`
+# Interface Control Document (ICD) - `svc-atc`
 
 <center>
 
@@ -8,7 +8,7 @@
 
 ## Overview
 
-This document defines the gRPC and REST interfaces unique to the `svc-FIXME` microservice.
+This document defines the gRPC and REST interfaces unique to the `svc-atc` microservice.
 
 Attribute | Description
 --- | ---
@@ -20,21 +20,15 @@ Document | Description
 --- | ---
 [High-Level Concept of Operations (CONOPS)](https://github.com/Arrow-air/se-services/blob/develop/docs/conops.md) | Overview of Arrow microservices.
 [High-Level Interface Control Document (ICD)](https://github.com/Arrow-air/se-services/blob/develop/docs/icd.md)  | Interfaces and frameworks common to all Arrow microservices.
-[Requirements - `svc-FIXME`](FIXME - generate a link specifically for this module's view in NocoDB) | Requirements and user stories for this microservice.
-[Concept of Operations - `svc-FIXME`](./conops.md) | Defines the motivation and duties of this microservice.
-[Software Design Document (SDD) - `svc-FIXME`](./sdd.md) | Specifies the internal activity of this microservice.
+[Requirements - `svc-atc`](https://nocodb.arrowair.com/dashboard/#/nc/view/1f06e270-d36d-41cb-85ea-25a5d5d60c77) | Requirements and user stories for this microservice.
+[Concept of Operations - `svc-atc`](./conops.md) | Defines the motivation and duties of this microservice.
+[Software Design Document (SDD) - `svc-atc`](./sdd.md) | Specifies the internal activity of this microservice.
 
 ## Frameworks
 
 See the High-Level ICD.
 
 ## REST
-
-FIXME - IF NO ADDITIONAL REST ENDPOINTS
-
-This microservice implements no additional REST endpoints beyond the common REST interfaces (see High-Level ICD). (FIXME: and remove the rest of this section)
-
-FIXME - IF ADDITIONAL REST ENDPOINTS, KEEP SECTION
 
 See the High-Level ICD for common interfaces.
 

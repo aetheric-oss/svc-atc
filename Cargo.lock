@@ -1553,8 +1553,8 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "73473c0e59e6d5812c5dfe2a064a6444949f089e20eec9a2e5506596494e4623"
 
 [[package]]
-name = "svc-template-rust"
-version = "0.2.0-develop.2"
+name = "svc-atc"
+version = "0.0.1"
 dependencies = [
  "anyhow",
  "axum",
@@ -1582,8 +1582,8 @@ dependencies = [
 ]
 
 [[package]]
-name = "svc-template-rust-client-grpc"
-version = "0.2.0-develop.2"
+name = "svc-atc-client-grpc"
+version = "0.0.1"
 dependencies = [
  "prost",
  "prost-types",
@@ -1592,8 +1592,8 @@ dependencies = [
 ]
 
 [[package]]
-name = "svc-template-rust-client-rest"
-version = "0.1.0"
+name = "svc-atc-client-rest"
+version = "0.0.1"
 dependencies = [
  "chrono",
  "hyper",
