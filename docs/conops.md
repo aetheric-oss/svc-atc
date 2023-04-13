@@ -1,4 +1,4 @@
-# Concept of Operations - `svc-FIXME`
+# Concept of Operations - `svc-atc`
 
 <center>
 
@@ -10,12 +10,10 @@ Attribute | Description
 --- | ---
 Maintainer | [@Arrow-air/services](https://github.com/orgs/Arrow-air/teams)
 Status | Draft
-  
-FIXME: Some of the headings below may not apply to your microservice. Remove if so.
 
 ## Overview
 
-FIXME - What does this microservice do, in brief?
+This service is an automated air traffic control service responsible for maintaining safe separation of VTOL aircraft.
 
 ## Related Documents
 
@@ -23,9 +21,9 @@ Document | Description
 --- | ---
 [High-Level Concept of Operations (CONOPS)](https://github.com/Arrow-air/se-services/blob/develop/docs/conops.md) | Overview of Arrow microservices.
 [High-Level Interface Control Document (ICD)](https://github.com/Arrow-air/se-services/blob/develop/docs/icd.md)  | Interfaces and frameworks common to all Arrow microservices.
-[Requirements - `svc-FIXME`](FIXME - generate a link specifically for this module's view in NocoDB) | Requirements and user stories for this microservice.
-[Interface Control Document (ICD) - `svc-FIXME`](./icd.md) | Defines the inputs and outputs of this microservice.
-[Software Design Document (SDD) - `svc-FIXME`](./sdd.md) | Specifies the internal activity of this microservice.
+[Requirements - `svc-atc`](https://nocodb.arrowair.com/dashboard/#/nc/view/1f06e270-d36d-41cb-85ea-25a5d5d60c77) | Requirements and user stories for this microservice.
+[Interface Control Document (ICD) - `svc-atc`](./icd.md) | Defines the inputs and outputs of this microservice.
+[Software Design Document (SDD) - `svc-atc`](./sdd.md) | Specifies the internal activity of this microservice.
 
 ## Motivation
 
