@@ -30,37 +30,86 @@ Document | Description
 
 Attribute | Applies | Explanation
 --- | --- | ---
-Safety Critical | ? | 
-Realtime | ? |
-
-## Global Variables
-
-**Statically Allocated Queues**
-
-FIXME
+Safety Critical | Y | Collision avoidance and rerouting.
 
 ## Logic
 
 ### Initialization
 
-FIXME Description of activities at init
+At initialization this service creates two servers on separate threads: a GRPC server and a REST server.
+
+The REST server expects the following environment variables to be set:
+- `DOCKER_PORT_REST` (default: `8000`)
+
+The GRPC server expects the following environment variables to be set:
+- `DOCKER_PORT_GRPC` (default: `50051`)
 
 ### Loop
 
-FIXME Description of activities during loop
+As a REST and GRPC server, this service awaits requests and executes handlers.
+
+Some handlers **require** the following environment variables to be set:
+- `STORAGE_HOST_GRPC`
+- `STORAGE_PORT_GRPC`
+
+This information allows this service to connect to other microservices to obtain information requested by the client.
+
+For detailed sequence diagrams regarding request handlers, see [Interface Handlers](#interface-handlers).
 
 ### Cleanup
 
-FIXME Description of activities at cleanup
+No cleanup behavior.
 
 ## Interface Handlers
 
-FIXME - What internal activities are triggered by messages at this module's interfaces?
+### `ack`
 
-## Tests
+Aircraft will confirm that they've received a flight plan.
 
-FIXME
+**Nominal - Carrier Confirms**
+```mermaid
+sequenceDiagram
+    autonumber
+    participant client as Networked Node
+    participant service as svc-atc
+    participant storage as svc-storage
+    client-->>service: (REST) POST /atc/ack/flight confirmed
+    service-->>storage: Update flight_plan.carrier_ack = NOW()
+```
 
-### Unit Tests
+**Off-Nominal - Carrier Denies**
+```mermaid
+sequenceDiagram
+    autonumber
+    participant client as Networked Node
+    participant service as svc-atc
+    participant storage as svc-storage
+    client-->>service: (REST) POST /atc/ack/flight denied
+    service-->>scheduler: TODO(R4) Attempt Reroute
+    alt Reroute Fails
+        scheduler->>service:: Failed
+        service-->>scheduler:: Cancel Flight
+    end
+```
 
-FIXME
+## Common Actions
+
+Attempt aircraft reroute
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant client as Networked Node
+    participant service as svc-atc
+    participant storage as svc-storage
+    client-->>service: (REST) POST /atc/ack/flight denied
+    alt Tier 1
+        service-->>scheduler: TODO(R4) Attempt Reroute
+    end
+    alt Tier 2
+        service-->>scheduler: Cancel flight
+    end
+    alt Tier 3
+        service-->>storage: Cancel flights
+    end
+```
