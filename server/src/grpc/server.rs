@@ -5,8 +5,8 @@ pub mod grpc_server {
     #![allow(unused_qualifications, missing_docs)]
     tonic::include_proto!("grpc");
 }
-use grpc_server::rpc_service_server::{RpcService, RpcServiceServer};
-use grpc_server::{ReadyRequest, ReadyResponse};
+pub use grpc_server::rpc_service_server::{RpcService, RpcServiceServer};
+pub use grpc_server::{ReadyRequest, ReadyResponse};
 
 use crate::config::Config;
 use crate::shutdown_signal;
@@ -18,10 +18,10 @@ use tonic::{Request, Response, Status};
 
 /// struct to implement the gRPC server functions
 #[derive(Debug, Default, Copy, Clone)]
-pub struct GRPCServerImpl {}
+pub struct ServerImpl {}
 
 #[tonic::async_trait]
-impl RpcService for GRPCServerImpl {
+impl RpcService for ServerImpl {
     /// Returns ready:true when service is available
     async fn is_ready(
         &self,
@@ -59,9 +59,9 @@ pub async fn grpc_server(config: Config) {
     };
 
     let (mut health_reporter, health_service) = tonic_health::server::health_reporter();
-    let imp = GRPCServerImpl::default();
+    let imp = ServerImpl::default();
     health_reporter
-        .set_serving::<RpcServiceServer<GRPCServerImpl>>()
+        .set_serving::<RpcServiceServer<ServerImpl>>()
         .await;
 
     //start server

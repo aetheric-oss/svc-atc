@@ -1,6 +1,5 @@
 //! Example communication with this service
 
-use chrono::Utc;
 use hyper::{Body, Client, Method, Request, Response};
 use hyper::{Error, StatusCode};
 use svc_atc_client_rest::types::*;
@@ -28,24 +27,24 @@ fn evaluate(resp: Result<Response<Body>, Error>, expected_code: StatusCode) -> (
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("NOTE: Ensure the server is running, or this example will fail.");
 
-    let rest_port = std::env::var("HOST_PORT_REST").unwrap_or_else(|_| "8000".to_string());
-
-    // let host_port = env!("HOST_PORT");
-    let url = format!("http://0.0.0.0:{rest_port}");
+    let rest_port = std::env::var("SERVER_PORT_REST").unwrap_or_else(|_| "8000".to_string());
+    // let host = std::env::var("SERVER_HOSTNAME").unwrap_or_else(|_| "localhost".to_string());
+    let host = "web-server".to_string();
+    let url = format!("http://{host}:{rest_port}");
     let mut ok = true;
     let client = Client::builder()
         .pool_idle_timeout(std::time::Duration::from_secs(10))
         .build_http();
 
-    // POST /template/example
+    // POST /ack/flight
     {
-        let data = ExampleRequest {
-            id: "abcdef12".to_string(),
-            timestamp: Utc::now(),
+        let data = AckRequest {
+            fp_id: "abcdef12".to_string(),
+            status: AckStatus::Confirm,
         };
 
         let data_str = serde_json::to_string(&data).unwrap();
-        let uri = format!("{}/template/example", url);
+        let uri = format!("{}/ack/flight", url);
         let req = Request::builder()
             .method(Method::POST)
             .uri(uri.clone())
