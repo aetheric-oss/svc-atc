@@ -69,9 +69,9 @@ dependencies = [
 
 [[package]]
 name = "anstyle"
-version = "1.0.1"
+version = "1.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3a30da5c5f2d5e72842e00bcb57657162cdabef0931f40e2deb9b4140440cecd"
+checksum = "41ed9a86bf92ae6580e0a31281f65a1b1d867c0cc68d5346e2ae128dddfa6a7d"
 
 [[package]]
 name = "anstyle-parse"
@@ -130,8 +130,8 @@ checksum = "3d62b7694a562cdf5a74227903507c56ab2cc8bdd1f781ed5cb4cf9c9f810bfc"
 
 [[package]]
 name = "arrow-macros-core"
-version = "0.1.1-develop.2"
-source = "git+https://github.com/Arrow-air/lib-common.git?tag=v0.1.1-develop.2#c7e0fc4918d3346a13ab84e2d4fc16d430a60c59"
+version = "0.2.0"
+source = "git+https://github.com/Arrow-air/lib-common.git?tag=v0.2.0#ecae9794fb2220aa03fdc04329bda32ca8441056"
 dependencies = [
  "proc-macro-error",
  "proc-macro2",
@@ -141,8 +141,8 @@ dependencies = [
 
 [[package]]
 name = "arrow-macros-derive"
-version = "0.1.1-develop.2"
-source = "git+https://github.com/Arrow-air/lib-common.git?tag=v0.1.1-develop.2#c7e0fc4918d3346a13ab84e2d4fc16d430a60c59"
+version = "0.2.0"
+source = "git+https://github.com/Arrow-air/lib-common.git?tag=v0.2.0#ecae9794fb2220aa03fdc04329bda32ca8441056"
 dependencies = [
  "arrow-macros-core",
  "proc-macro-error",
@@ -360,9 +360,9 @@ dependencies = [
 
 [[package]]
 name = "clap"
-version = "4.3.21"
+version = "4.3.24"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c27cdf28c0f604ba3f512b0c9a409f8de8513e4816705deb0498b627e7c3a3fd"
+checksum = "fb690e81c7840c0d7aade59f242ea3b41b9bc27bcd5997890e7702ae4b32e487"
 dependencies = [
  "clap_builder",
  "clap_derive",
@@ -371,9 +371,9 @@ dependencies = [
 
 [[package]]
 name = "clap_builder"
-version = "4.3.21"
+version = "4.3.24"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "08a9f1ab5e9f01a9b81f202e8562eb9a10de70abf9eaeac1be465c28b75aa4aa"
+checksum = "5ed2e96bc16d8d740f6f48d663eddf4b8a0983e79210fd55479b7bcd0a69860e"
 dependencies = [
  "anstream",
  "anstyle",
@@ -1088,8 +1088,8 @@ checksum = "e2abad23fbc42b3700f2f279844dc832adb2b2eb069b2df918f455c4e18cc646"
 
 [[package]]
 name = "lib-common"
-version = "0.1.1-develop.2"
-source = "git+https://github.com/Arrow-air/lib-common.git?tag=v0.1.1-develop.2#c7e0fc4918d3346a13ab84e2d4fc16d430a60c59"
+version = "0.2.0"
+source = "git+https://github.com/Arrow-air/lib-common.git?tag=v0.2.0#ecae9794fb2220aa03fdc04329bda32ca8441056"
 dependencies = [
  "arrow-macros-derive",
  "cargo-husky",
@@ -2193,11 +2193,13 @@ checksum = "81cdd64d312baedb58e21336b31bc043b77e01cc99033ce76ef539f78e965ebc"
 name = "svc-atc"
 version = "0.0.2-develop.1"
 dependencies = [
+ "anstyle",
  "anyhow",
  "axum",
  "cargo-husky",
  "chrono",
  "clap",
+ "clap_lex",
  "config",
  "dotenv",
  "futures",
@@ -2256,8 +2258,8 @@ dependencies = [
 
 [[package]]
 name = "svc-storage"
-version = "0.10.1-develop.20"
-source = "git+https://github.com/Arrow-air/svc-storage?tag=v0.10.1-develop.20#c1bbe62bf12b1a54b2615fdfb080c3f0c261df48"
+version = "0.11.0"
+source = "git+https://github.com/Arrow-air/svc-storage?tag=v0.11.0#e58dcdc9587a7e5cde605f68de94918e4d0fbd71"
 dependencies = [
  "anyhow",
  "byteorder",
@@ -2266,6 +2268,7 @@ dependencies = [
  "cfg-if",
  "chrono",
  "clap",
+ "clap_lex",
  "config",
  "deadpool",
  "deadpool-postgres",
@@ -2283,7 +2286,6 @@ dependencies = [
  "num-traits",
  "once_cell",
  "openssl",
- "ordered-float 3.7.0",
  "paste",
  "postgis",
  "postgres-native-tls",
@@ -2307,8 +2309,8 @@ dependencies = [
 
 [[package]]
 name = "svc-storage-client-grpc"
-version = "0.10.1-develop.20"
-source = "git+https://github.com/Arrow-air/svc-storage?tag=v0.10.1-develop.20#c1bbe62bf12b1a54b2615fdfb080c3f0c261df48"
+version = "0.11.0"
+source = "git+https://github.com/Arrow-air/svc-storage?tag=v0.11.0#e58dcdc9587a7e5cde605f68de94918e4d0fbd71"
 dependencies = [
  "anyhow",
  "cfg-if",

@@ -48,6 +48,6 @@ pub struct Cli {
 pub async fn shutdown_signal(server: &str) {
     tokio::signal::ctrl_c()
         .await
-        .expect("expect tokio signal ctrl-c");
-    rest_warn!("({}) shutdown signal", server);
+        .expect("(shutdown_signal) expect tokio signal ctrl-c.");
+    rest_warn!("({}) shutdown signal.", server);
 }

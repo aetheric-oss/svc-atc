@@ -3,7 +3,7 @@
 use crate::grpc::client::GrpcClients;
 use axum::{extract::Extension, Json};
 use hyper::StatusCode;
-use svc_storage_client_grpc::ClientConnect;
+use lib_common::grpc::ClientConnect;
 
 /// openapi generated rest types
 pub mod rest_types {

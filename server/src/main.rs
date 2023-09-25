@@ -34,6 +34,6 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     tokio::spawn(rest::server::rest_server(config.clone()));
     let _ = tokio::spawn(grpc::server::grpc_server(config)).await;
 
-    info!("Server shutdown.");
+    info!("(main) server shutdown.");
     Ok(())
 }

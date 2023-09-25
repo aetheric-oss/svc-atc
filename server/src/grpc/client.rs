@@ -1,6 +1,6 @@
 //! gRPC client helpers implementation
 
-pub use svc_storage_client_grpc::Clients;
+pub use svc_storage_client_grpc::prelude::Clients;
 
 /// Struct to hold all gRPC client connections
 #[derive(Clone, Debug)]

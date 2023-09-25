@@ -5,11 +5,11 @@ pub mod macros;
 
 use crate::grpc::client::GrpcClients;
 use chrono::Utc;
+use lib_common::grpc::ClientConnect;
 use prost_types::FieldMask;
 use std::fmt;
-use svc_storage_client_grpc::resources::flight_plan::Data as FpData;
-use svc_storage_client_grpc::resources::flight_plan::UpdateObject as FpUpdate;
-use svc_storage_client_grpc::ClientConnect;
+use svc_storage_client_grpc::prelude::flight_plan::Data as FpData;
+use svc_storage_client_grpc::prelude::flight_plan::UpdateObject as FpUpdate;
 
 /// Error type for ack_flight
 #[derive(Debug, Copy, Clone)]

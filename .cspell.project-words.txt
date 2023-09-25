@@ -30,3 +30,4 @@ dotenv
 NocoDB
 autonumber
 logtest
+anstyle

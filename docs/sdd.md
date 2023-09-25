@@ -1,12 +1,8 @@
+![Arrow Banner](https://github.com/Arrow-air/tf-github/raw/main/src/templates/doc-banner-services.png)
+
 # Software Design Document (SDD) - `svc-atc` 
 
-<center>
-
-<img src="https://github.com/Arrow-air/tf-github/raw/main/src/templates/doc-banner-services.png" style="height:250px" />
-
-</center>
-
-## Overview
+## :telescope: Overview
 
 This document details the software implementation of `svc-atc`.
 
@@ -16,7 +12,7 @@ Attribute | Description
 --- | ---
 Status | Draft
 
-## Related Documents
+## :books: Related Documents
 
 Document | Description
 --- | ---
@@ -26,13 +22,13 @@ Document | Description
 [Concept of Operations - `svc-atc`](./conops.md) | Defines the motivation and duties of this microservice.
 [Interface Control Document (ICD) - `svc-atc`](./icd.md) | Defines the inputs and outputs of this microservice.
 
-## Module Attributes
+## :dna: Module Attributes
 
 Attribute | Applies | Explanation
 --- | --- | ---
 Safety Critical | Y | Collision avoidance and rerouting.
 
-## Logic
+## :gear: Logic
 
 ### Initialization
 
@@ -54,13 +50,13 @@ Some handlers **require** the following environment variables to be set:
 
 This information allows this service to connect to other microservices to obtain information requested by the client.
 
-For detailed sequence diagrams regarding request handlers, see [Interface Handlers](#interface-handlers).
+For detailed sequence diagrams regarding request handlers, see [Interface Handlers](#speech_balloon-interface-handlers).
 
 ### Cleanup
 
 No cleanup behavior.
 
-## Interface Handlers
+## :speech_balloon: Interface Handlers
 
 ### `ack`
 

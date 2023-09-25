@@ -28,11 +28,15 @@ stub_server = ["test_util"]
 stub_client = ["stub_backends"]
 
 [dependencies]
-anyhow       = "1.0"
-axum         = "0.6"
-cargo-husky  = "1"
-chrono       = { version = "0.4", features = ["serde"] }
-clap         = { version = "4.0", features = ["derive"] }
+# Must pin in R3 due to old rust version
+anstyle     = "=1.0.0"
+anyhow      = "1.0"
+axum        = "0.6"
+cargo-husky = "1"
+chrono      = { version = "0.4", features = ["serde"] }
+# Must pin in R3 due to old rust version
+clap         = { version = "=4.3.24", features = ["derive"] }
+clap_lex     = "=0.5.0"
 config       = "0.13"
 dotenv       = "0.15"
 futures      = "0.3"
@@ -63,12 +67,12 @@ version = "1.2"
 
 [dependencies.lib-common]
 git = "https://github.com/Arrow-air/lib-common.git"
-tag = "v0.1.1-develop.2"
+tag = "v0.2.0"
 
 [dependencies.svc-storage-client-grpc]
 features = ["flight_plan"]
 git      = "https://github.com/Arrow-air/svc-storage"
-tag      = "v0.10.1-develop.20"
+tag      = "v0.11.0"
 
 [dev-dependencies.cargo-husky]
 default-features = false          # Disable features which are enabled by default

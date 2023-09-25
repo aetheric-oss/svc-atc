@@ -1,21 +1,17 @@
+![Arrow Banner](https://github.com/Arrow-air/tf-github/raw/main/src/templates/doc-banner-services.png)
+
 # Concept of Operations - `svc-atc`
-
-<center>
-
-<img src="https://github.com/Arrow-air/tf-github/raw/main/src/templates/doc-banner-services.png" style="height:250px" />
-
-</center>
 
 Attribute | Description
 --- | ---
 Maintainer | [@Arrow-air/services](https://github.com/orgs/Arrow-air/teams)
 Status | Draft
 
-## Overview
+## :telescope: Overview
 
 This service is an automated air traffic control service responsible for maintaining safe separation of VTOL aircraft.
 
-## Related Documents
+## :books: Related Documents
 
 Document | Description
 --- | ---

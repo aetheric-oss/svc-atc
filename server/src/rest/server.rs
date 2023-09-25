@@ -50,10 +50,10 @@ pub async fn rest_server(config: Config) -> Result<(), ()> {
     let limit_middleware = ServiceBuilder::new()
         .layer(TraceLayer::new_for_http())
         .layer(HandleErrorLayer::new(|e: BoxError| async move {
-            rest_warn!("(server) too many requests: {}", e);
+            rest_warn!("(rest_server) too many requests: {}", e);
             (
                 StatusCode::TOO_MANY_REQUESTS,
-                "(server) too many requests.".to_string(),
+                "(rest_server) too many requests.".to_string(),
             )
         }))
         .layer(BufferLayer::new(100))
@@ -75,15 +75,15 @@ pub async fn rest_server(config: Config) -> Result<(), ()> {
         .layer(limit_middleware)
         .layer(Extension(grpc_clients)); // Extension layer must be last
 
-    rest_info!("(rest) hosted at {:?}", full_rest_addr);
+    rest_info!("(rest_server) hosted at {:?}", full_rest_addr);
     match axum::Server::bind(&full_rest_addr)
         .serve(app.into_make_service())
         .with_graceful_shutdown(shutdown_signal("rest"))
         .await
     {
-        Ok(_) => rest_info!("REST server running at: {}.", full_rest_addr),
+        Ok(_) => rest_info!("(rest_server) running at: {}.", full_rest_addr),
         Err(e) => {
-            rest_error!("could not start REST server: {}", e);
+            rest_error!("(rest_server) could not start REST server: {}", e);
         }
     };
 
