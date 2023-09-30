@@ -28,8 +28,9 @@ stub_server = ["test_util"]
 stub_client = ["stub_backends"]
 
 [dependencies]
-# Must pin in R3 due to old rust version
-anstyle     = "=1.0.0"
+# pin anstyle to 1.0.2 for now, since 1.0.3 requires rustc 1.70.0 or newer.
+# Entire dependency can be removed once resolved.
+anstyle     = "=1.0.2"
 anyhow      = "1.0"
 axum        = "0.6"
 cargo-husky = "1"

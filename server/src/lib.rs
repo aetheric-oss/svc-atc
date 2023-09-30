@@ -49,5 +49,5 @@ pub async fn shutdown_signal(server: &str) {
     tokio::signal::ctrl_c()
         .await
         .expect("(shutdown_signal) expect tokio signal ctrl-c.");
-    rest_warn!("({}) shutdown signal.", server);
+    rest_warn!("(shutdown_signal) server shutdown for {}.", server);
 }
