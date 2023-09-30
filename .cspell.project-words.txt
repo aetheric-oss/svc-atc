@@ -28,3 +28,6 @@ adsb
 openapi
 dotenv
 NocoDB
+autonumber
+logtest
+anstyle

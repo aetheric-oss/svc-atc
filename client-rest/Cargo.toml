@@ -1,7 +1,7 @@
 [package]
-description = "Types used to communicate with the REST API of svc-template-rust."
-name        = "svc-template-rust-client-rest"
-version     = "0.1.0"
+description = "Types used to communicate with the REST API of svc-atc."
+name        = "svc-atc-client-rest"
+version     = "0.0.2-develop.1"
 
 categories.workspace   = true
 edition.workspace      = true
@@ -25,4 +25,4 @@ name = "rest"
 [dev-dependencies]
 hyper = { version = "0.14", features = ["full"] }
 tokio = { version = "1.20", features = ["full"] }
-uuid  = { version = "1.3.0", features = ["v4"] }
+uuid  = { version = "1.3", features = ["v4"] }
