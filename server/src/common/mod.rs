@@ -5,11 +5,8 @@ pub mod macros;
 
 use crate::grpc::client::GrpcClients;
 use chrono::Utc;
-use lib_common::grpc::ClientConnect;
-use prost_types::FieldMask;
 use std::fmt;
-use svc_storage_client_grpc::prelude::flight_plan::Data as FpData;
-use svc_storage_client_grpc::prelude::flight_plan::UpdateObject as FpUpdate;
+use svc_storage_client_grpc::prelude::*;
 
 /// Error type for ack_flight
 #[derive(Debug, Copy, Clone)]
@@ -41,22 +38,18 @@ pub async fn ack_flight(fp_id: String, grpc_clients: &GrpcClients) -> Result<(),
     //
     // Update the flight plan record to show that it has been acknowledged
     //
-    let request = tonic::Request::new(FpUpdate {
+    let request = flight_plan::UpdateObject {
         id: fp_id,
-        data: Some(FpData {
+        data: Some(flight_plan::Data {
             carrier_ack: Some(Utc::now().into()),
             ..Default::default()
         }),
         mask: Some(FieldMask {
             paths: vec!["carrier_ack".to_string()],
         }),
-    });
-
-    let Ok(mut client) = grpc_clients.storage.flight_plan.get_client().await else {
-        let error_msg = "svc-storage unavailable.".to_string();
-        common_error!("(acknowledge_flight_plan) {}", &error_msg);
-        return Err(AckError::Unavailable);
     };
+
+    let client = &grpc_clients.storage.flight_plan;
 
     //
     // TODO(R4) - Push to queue and retry on failure
