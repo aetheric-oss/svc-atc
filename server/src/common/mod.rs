@@ -59,6 +59,8 @@ pub async fn ack_flight(fp_id: String, grpc_clients: &GrpcClients) -> Result<(),
         }),
     };
 
+    let client = &grpc_clients.storage.flight_plan;
+
     //
     // TODO(R4) - Push to queue and retry on failure
     //
