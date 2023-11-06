@@ -4,6 +4,7 @@
 
 RUST_IMAGE_NAME     ?= ghcr.io/arrow-air/tools/arrow-rust
 RUST_IMAGE_TAG      ?= 1.2
+DOCKER_IMAGE_NAME   ?= $(PACKAGE_NAME)
 CARGO_MANIFEST_PATH ?= Cargo.toml
 CARGO_INCREMENTAL   ?= 1
 RUSTC_BOOTSTRAP     ?= 0
@@ -125,7 +126,6 @@ rust-example-%: check-cargo-registry check-logs-dir rust-docker-pull docker-buil
 		-e SERVER_PORT_GRPC=$(DOCKER_PORT_GRPC) \
 		-e SERVER_PORT_REST=$(DOCKER_PORT_REST) \
 		-e SERVER_HOSTNAME=$(DOCKER_NAME)-web-server \
-		-e DOCKER_IMAGE_TAG=dev \
 		example ; docker compose down
 
 rust-clippy: check-cargo-registry rust-docker-pull
