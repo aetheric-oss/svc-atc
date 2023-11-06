@@ -4,6 +4,7 @@
 
 RUST_IMAGE_NAME     ?= ghcr.io/arrow-air/tools/arrow-rust
 RUST_IMAGE_TAG      ?= 1.2
+DOCKER_IMAGE_NAME   ?= $(PACKAGE_NAME)
 CARGO_MANIFEST_PATH ?= Cargo.toml
 CARGO_INCREMENTAL   ?= 1
 RUSTC_BOOTSTRAP     ?= 0
@@ -39,7 +40,10 @@ cargo_run = docker run \
 endif
 
 rust-docker-pull:
-	@echo docker pull -q $(RUST_IMAGE_NAME):$(RUST_IMAGE_TAG)
+	@docker pull -q $(RUST_IMAGE_NAME):$(RUST_IMAGE_TAG)
+
+latest-docker-pull:
+	@docker pull -q $(DOCKER_IMAGE_NAME):latest
 
 .help-rust:
 	@echo ""
@@ -107,7 +111,9 @@ rust-test: check-cargo-registry rust-docker-pull rust-test-features
 	@$(call cargo_run,test,--features $(PACKAGE_TEST_FEATURES) --workspace)
 
 rust-example-%: EXAMPLE_TARGET=$*
+rust-example-%: DOCKER_IMAGE_TAG=dev
 rust-example-%: check-cargo-registry check-logs-dir rust-docker-pull
+	@echo "$(YELLOW) Make sure the $(DOCKER_IMAGE_NAME):dev image is available by runnning 'make docker-build-dev' first.$(SGR0)"
 	@docker compose run \
 		--user `id -u`:`id -g` \
 		--rm \
@@ -117,7 +123,6 @@ rust-example-%: check-cargo-registry check-logs-dir rust-docker-pull
 		-e SERVER_PORT_GRPC=$(DOCKER_PORT_GRPC) \
 		-e SERVER_PORT_REST=$(DOCKER_PORT_REST) \
 		-e SERVER_HOSTNAME=$(DOCKER_NAME)-web-server \
-		-e DOCKER_IMAGE_TAG=dev \
 		example ; docker compose down
 
 rust-clippy: check-cargo-registry rust-docker-pull
