@@ -1,24 +1,18 @@
 //! Rest API implementations
-
-use crate::grpc::client::GrpcClients;
-use axum::{extract::Extension, Json};
-use hyper::StatusCode;
-use lib_common::grpc::ClientConnect;
-
 /// openapi generated rest types
 pub mod rest_types {
     include!("../../../openapi/types.rs");
 }
 
-// GRPC client types
-// use svc_scheduler_client_grpc::grpc::{
-//     ConfirmItineraryRequest, Id, Itinerary as SchedulerItinerary, QueryFlightPlan,
-// };
+pub use rest_types::*;
 
-// REST types the caller will use
-pub use rest_types::{AckRequest, AckStatus};
+use crate::grpc::client::GrpcClients;
+use axum::{extract::Extension, Json};
+use hyper::StatusCode;
 
-/// Provides a way to tell a caller if the service is healthy.
+use svc_storage_client_grpc::prelude::*;
+
+// Provides a way to tell a caller if the service is healthy.
 /// Checks dependencies, making sure all connections can be made.
 #[utoipa::path(
     get,
@@ -36,11 +30,19 @@ pub async fn health_check(
 
     let mut ok = true;
 
-    if grpc_clients.storage.flight_plan.get_client().await.is_err() {
-        let error_msg = "svc-storage unavailable.".to_string();
-        rest_error!("(health_check) {}", &error_msg);
+    // This health check is to verify that ALL dependencies of this
+    // microservice are running.
+    if grpc_clients
+        .storage
+        .flight_plan
+        .is_ready(ReadyRequest {})
+        .await
+        .is_err()
+    {
+        let error_msg = "svc-storage flight_plan unavailable.".to_string();
+        rest_error!("(health_check) {}.", &error_msg);
         ok = false;
-    };
+    }
 
     match ok {
         true => {
@@ -54,7 +56,7 @@ pub async fn health_check(
     }
 }
 
-/// Example REST API function
+/// Acknowledge a flight
 #[utoipa::path(
     post,
     path = "/ack/flight",

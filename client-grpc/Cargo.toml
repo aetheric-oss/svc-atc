@@ -1,18 +1,19 @@
 [package]
-description = "Arrow air traffic control service GRPC client"
+description = "Arrow atc service gRPC client"
+keywords    = ["vtol", "client", "grpc", "atc"] # max 5
 name        = "svc-atc-client-grpc"
 version     = "0.1.0"
 
+authors.workspace      = true
 categories.workspace   = true
 edition.workspace      = true
 homepage.workspace     = true
-keywords.workspace     = true
 license-file.workspace = true
 repository.workspace   = true
 
 [features]
 dev       = ["mock", "tokio"]
-test_util = ["mock", "stub_backends"]
+test_util = ["mock", "stub_backends", "tokio"]
 # Will add a 'mock' module for the enabled resources, providing access to mock data generation functions
 mock = []
 # Will use a stubbed server connection, only use for tests!
@@ -28,30 +29,32 @@ stub_client = ["svc-atc"]
 [dependencies]
 cfg-if      = "1.0"
 log         = { version = "0.4" }
-prost       = "0.11"
-prost-types = "0.11"
+prost       = "0.12"
+prost-types = "0.12"
 svc-atc     = { path = "../server", optional = true }
-tonic       = "0.8"
+tonic       = "0.10"
 tower       = { version = "0.4", optional = true }
-
-[dependencies.tokio]
-features = ["macros", "rt-multi-thread"]
-optional = true
-version  = "1.28"
 
 [dependencies.lib-common]
 features = ["grpc"]
 git      = "https://github.com/Arrow-air/lib-common.git"
-tag      = "v0.2.0"
+tag      = "latest-develop"
+
+[dependencies.tokio]
+features = ["macros", "rt-multi-thread"]
+optional = true
+version  = "1.33"
+
+[dependencies.utoipa]
+version = "4.0"
+
+[dev-dependencies]
+logtest = "2.0"
 
 # Make sure we enable the 'mock_services' features when running tests
 [dev-dependencies.svc-atc-client-grpc]
 features = ["dev"]
 path     = "."
-
-[dev-dependencies]
-logtest = "2.0"
-tokio   = { version = "1.0", features = ["macros", "rt-multi-thread"] }
 
 [[example]]
 name = "grpc"
