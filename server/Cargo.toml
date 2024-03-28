@@ -48,14 +48,15 @@ tonic        = "0.10"
 tonic-health = "0.10"
 tower        = { version = "0.4", features = ["limit"] }
 tower-http   = { version = "0.4", features = ["cors", "trace"] }
+uuid         = { version = "1.8.0", features = ["v4"] }
 
 [dependencies.svc-storage-client-grpc]
-features = ["flight_plan"]
-git      = "https://github.com/Arrow-air/svc-storage"
+features = ["flight_plan", "flight_plan_parcel"]
+git      = "https://github.com/aetheric-oss/svc-storage"
 tag      = "latest-develop"
 
 [dependencies.lib-common]
-git = "https://github.com/Arrow-air/lib-common"
+git = "https://github.com/aetheric-oss/lib-common"
 tag = "latest-develop"
 
 [dependencies.log4rs]
