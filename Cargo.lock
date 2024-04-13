@@ -2144,7 +2144,7 @@ checksum = "81cdd64d312baedb58e21336b31bc043b77e01cc99033ce76ef539f78e965ebc"
 
 [[package]]
 name = "svc-atc"
-version = "0.1.1-develop.0"
+version = "0.1.1-develop.1"
 dependencies = [
  "anyhow",
  "axum",
@@ -2180,7 +2180,7 @@ dependencies = [
 
 [[package]]
 name = "svc-atc-client-grpc"
-version = "0.1.1-develop.0"
+version = "0.1.1-develop.1"
 dependencies = [
  "cfg-if",
  "lib-common",
@@ -2198,7 +2198,7 @@ dependencies = [
 
 [[package]]
 name = "svc-atc-client-rest"
-version = "0.1.1-develop.0"
+version = "0.1.1-develop.1"
 dependencies = [
  "chrono",
  "hyper",
