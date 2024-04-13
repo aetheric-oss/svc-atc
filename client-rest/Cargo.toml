@@ -2,7 +2,7 @@
 description = "Types used to communicate with the REST API of svc-atc."
 keywords    = ["vtol", "client", "rest", "atc"]                         # max 5
 name        = "svc-atc-client-rest"
-version     = "0.1.1-develop.0"
+version     = "0.1.1-develop.1"
 
 authors.workspace      = true
 categories.workspace   = true
