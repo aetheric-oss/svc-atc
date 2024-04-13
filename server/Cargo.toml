@@ -2,7 +2,7 @@
 description = "Arrow air traffic control service gRPC server"
 keywords    = ["vtol", "server", "grpc", "rest", "atc"]       # max 5
 name        = "svc-atc"
-version     = "0.1.1-develop.0"
+version     = "0.1.1-develop.1"
 
 authors.workspace      = true
 categories.workspace   = true
