@@ -28,15 +28,15 @@ mod tests {
     #[tokio::test]
     async fn test_grpc_clients_default() {
         lib_common::logger::get_log_handle().await;
-        ut_info!("(test_grpc_clients_default) Start.");
+        ut_info!("Start.");
 
         let config = crate::Config::default();
         let clients = GrpcClients::default(config);
 
         let flight_plan = &clients.storage.flight_plan;
-        ut_debug!("(test_grpc_clients_default) flight_plan: {:?}", flight_plan);
+        ut_debug!("flight_plan: {:?}", flight_plan);
         assert_eq!(flight_plan.get_name(), "flight_plan");
 
-        ut_info!("(test_grpc_clients_default) Success.");
+        ut_info!("Success.");
     }
 }

@@ -43,13 +43,13 @@ pub async fn ack_flight(fp_id: Uuid, grpc_clients: &GrpcClients) -> Result<(), A
         })
         .await
         .map_err(|e| {
-            common_error!("(ack_flight) {}", e);
+            common_error!("{}", e);
             AckError::NotFound
         })?
         .into_inner()
         .data
         .ok_or_else(|| {
-            common_error!("(ack_flight) Couldn't get data from object id: {}", fp_id);
+            common_error!("Couldn't get data from object id: {}", fp_id);
             AckError::Internal
         })?;
 
@@ -72,7 +72,7 @@ pub async fn ack_flight(fp_id: Uuid, grpc_clients: &GrpcClients) -> Result<(), A
         .update(request)
         .await
         .map_err(|e| {
-            common_error!("(ack_flight) {}", e);
+            common_error!("{}", e);
             AckError::Internal
         })?;
 
