@@ -1,7 +1,7 @@
 /// Types used for REST communication with the svc-cargo server
 use serde::{Deserialize, Serialize};
 use utoipa::{IntoParams, ToSchema};
-use chrono::{DateTime, Utc};
+use lib_common::time::{DateTime, Utc};
 
 /// Example Request Body Information Type
 #[derive(Debug, Clone, Deserialize, Serialize, ToSchema, IntoParams)]

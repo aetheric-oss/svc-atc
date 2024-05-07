@@ -1,9 +1,9 @@
-![Arrow Banner](https://github.com/Arrow-air/tf-github/raw/main/src/templates/doc-banner-services.png)
+![Aetheric Banner](https://github.com/aetheric-oss/.github/raw/main/assets/readme-banner.png)
 
 # `svc-atc` Service
 
-![GitHub stable release (latest by date)](https://img.shields.io/github/v/release/Arrow-air/svc-atc?sort=semver&color=green) ![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/Arrow-air/svc-atc?include_prereleases) [![Coverage Status](https://coveralls.io/repos/github/Arrow-air/svc-atc/badge.svg?branch=develop)](https://coveralls.io/github/Arrow-air/svc-atc)
-![Sanity Checks](https://github.com/arrow-air/svc-atc/actions/workflows/sanity_checks.yml/badge.svg?branch=develop) ![Python PEP8](https://github.com/arrow-air/svc-atc/actions/workflows/python_ci.yml/badge.svg?branch=develop) ![Rust Checks](https://github.com/arrow-air/svc-atc/actions/workflows/rust_ci.yml/badge.svg?branch=develop) 
+![GitHub stable release (latest by date)](https://img.shields.io/github/v/release/aetheric-oss/svc-atc?sort=semver&color=green) ![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/aetheric-oss/svc-atc?include_prereleases) [![Coverage Status](https://coveralls.io/repos/github/aetheric-oss/svc-atc/badge.svg?branch=develop)](https://coveralls.io/github/aetheric-oss/svc-atc)
+![Sanity Checks](https://github.com/aetheric-oss/svc-atc/actions/workflows/sanity_checks.yml/badge.svg?branch=develop) ![Python PEP8](https://github.com/aetheric-oss/svc-atc/actions/workflows/python_ci.yml/badge.svg?branch=develop) ![Rust Checks](https://github.com/aetheric-oss/svc-atc/actions/workflows/rust_ci.yml/badge.svg?branch=develop) 
 ![Arrow DAO Discord](https://img.shields.io/discord/853833144037277726?style=plastic)
 
 ## :telescope: Overview
@@ -99,7 +99,7 @@ The following documents are relevant to this service:
 - [Concept of Operations](./docs/conops.md)
 - [Software Design Document](./docs/sdd.md)
 - [Interface Control Document (ICD)](./docs/icd.md)
-- [Requirements](https://nocodb.arrowair.com/dashboard/#/nc/view/1f06e270-d36d-41cb-85ea-25a5d5d60c77)
+- [Requirements](https://nocodb.aetheric.nl/dashboard/#/nc/view/1f06e270-d36d-41cb-85ea-25a5d5d60c77)
 
 ## :busts_in_silhouette: Arrow DAO
 Learn more about us:
