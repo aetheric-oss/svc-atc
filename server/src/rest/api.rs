@@ -28,7 +28,7 @@ use svc_storage_client_grpc::prelude::*;
 pub async fn health_check(
     Extension(grpc_clients): Extension<GrpcClients>,
 ) -> Result<(), StatusCode> {
-    rest_debug!("(health_check) entry.");
+    rest_debug!("entry.");
 
     let mut ok = true;
 
@@ -42,17 +42,17 @@ pub async fn health_check(
         .is_err()
     {
         let error_msg = "svc-storage flight_plan unavailable.".to_string();
-        rest_error!("(health_check) {}.", &error_msg);
+        rest_error!("{}.", &error_msg);
         ok = false;
     }
 
     match ok {
         true => {
-            rest_debug!("(health_check) healthy, all dependencies running.");
+            rest_debug!("healthy, all dependencies running.");
             Ok(())
         }
         false => {
-            rest_error!("(health_check) unhealthy, 1+ dependencies down.");
+            rest_error!("unhealthy, 1+ dependencies down.");
             Err(StatusCode::SERVICE_UNAVAILABLE)
         }
     }
@@ -119,42 +119,42 @@ impl TryFrom<flight_plan::Object> for FlightPlan {
     fn try_from(object: flight_plan::Object) -> Result<Self, Self::Error> {
         let flight_uuid = object.id;
         let data = object.data.ok_or_else(|| {
-            rest_error!("(try_from) could not get data from object.");
+            rest_error!("could not get data from object.");
             FlightPlanError::Data
         })?;
 
         let origin_vertiport_id = data.origin_vertiport_id.ok_or_else(|| {
-            rest_error!("(try_from) could not get origin_vertiport_id from data.");
+            rest_error!("could not get origin_vertiport_id from data.");
             FlightPlanError::OriginVertiportId
         })?;
 
         let target_vertiport_id = data.target_vertiport_id.ok_or_else(|| {
-            rest_error!("(try_from) could not get target_vertiport_id from data.");
+            rest_error!("could not get target_vertiport_id from data.");
             FlightPlanError::TargetVertiportId
         })?;
 
         let origin_timeslot_start = data.origin_timeslot_start.ok_or_else(|| {
-            rest_error!("(try_from) could not get origin_timeslot_start from data.");
+            rest_error!("could not get origin_timeslot_start from data.");
             FlightPlanError::OriginTimeslotStart
         })?;
 
         let origin_timeslot_end = data.origin_timeslot_end.ok_or_else(|| {
-            rest_error!("(try_from) could not get origin_timeslot_end from data.");
+            rest_error!("could not get origin_timeslot_end from data.");
             FlightPlanError::OriginTimeslotEnd
         })?;
 
         let target_timeslot_start = data.target_timeslot_start.ok_or_else(|| {
-            rest_error!("(try_from) could not get target_timeslot_start from data.");
+            rest_error!("could not get target_timeslot_start from data.");
             FlightPlanError::TargetTimeslotStart
         })?;
 
         let target_timeslot_end = data.target_timeslot_end.ok_or_else(|| {
-            rest_error!("(try_from) could not get target_timeslot_end from data.");
+            rest_error!("could not get target_timeslot_end from data.");
             FlightPlanError::TargetTimeslotEnd
         })?;
 
         let path = data.path.ok_or_else(|| {
-            rest_error!("(try_from) could not get path from data.");
+            rest_error!("could not get path from data.");
             FlightPlanError::Path
         })?;
 
@@ -204,17 +204,17 @@ pub async fn acknowledge_flight_plan(
     Extension(grpc_clients): Extension<GrpcClients>,
     Json(payload): Json<AckRequest>,
 ) -> Result<(), StatusCode> {
-    rest_debug!("(acknowledge_flight_plan) entry.");
+    rest_debug!("entry.");
 
     let id = to_uuid(&payload.fp_id).ok_or_else(|| {
-        rest_error!("(ack_flight) invalid flight plan UUID.");
+        rest_error!("invalid flight plan UUID.");
         StatusCode::BAD_REQUEST
     })?;
 
     crate::common::ack_flight(id, &grpc_clients)
         .await
         .map_err(|e| {
-            rest_error!("(acknowledge_flight_plan) {e}");
+            rest_error!("{e}");
             StatusCode::INTERNAL_SERVER_ERROR
         })
 }
@@ -234,14 +234,14 @@ pub async fn get_flight_plans(
     Extension(grpc_clients): Extension<GrpcClients>,
     aircraft_id: Bytes,
 ) -> Result<Json<Vec<FlightPlan>>, StatusCode> {
-    rest_debug!("(get_flight_plans) entry.");
+    rest_debug!("entry.");
     let aircraft_id = String::from_utf8(aircraft_id.to_vec()).map_err(|_| {
-        rest_error!("(get_flight_plans) could not convert aircraft_id to string.");
+        rest_error!("could not convert aircraft_id to string.");
         StatusCode::BAD_REQUEST
     })?;
 
     let aircraft_id = to_uuid(&aircraft_id).ok_or_else(|| {
-        rest_error!("(get_flight_plans) invalid aircraft UUID.");
+        rest_error!("invalid aircraft UUID.");
         StatusCode::BAD_REQUEST
     })?;
 
@@ -249,7 +249,7 @@ pub async fn get_flight_plans(
 
     // TODO(R5): parameterize duration lookahead?
     let delta = Duration::try_minutes(60).ok_or_else(|| {
-        rest_error!("(get_flight_plans) could not create duration.");
+        rest_error!("could not create duration.");
         StatusCode::INTERNAL_SERVER_ERROR
     })?;
 
@@ -273,7 +273,7 @@ pub async fn get_flight_plans(
         .search(filter)
         .await
         .map_err(|e| {
-            rest_error!("(get_flight_plans) svc-storage failure: {e}");
+            rest_error!("svc-storage failure: {e}");
             StatusCode::NOT_FOUND
         })?
         .into_inner()
@@ -296,7 +296,7 @@ pub async fn get_flight_plans(
             .await
             .map_err(|e| {
                 let error_msg = "svc-storage failure.".to_string();
-                rest_error!("(get_flight_plans) {}: {e}", &error_msg);
+                rest_error!("{}: {e}", &error_msg);
 
                 StatusCode::INTERNAL_SERVER_ERROR
             })?
@@ -321,7 +321,7 @@ pub async fn get_flight_plans(
             });
     }
 
-    rest_debug!("(get_flight_plans) returning {} plans.", plans.len());
+    rest_debug!("returning {} plans.", plans.len());
     Ok(Json(plans))
 }
 

@@ -1,4 +1,4 @@
-![Aetheric Banner](https://github.com/aetheric-oss/.github/blob/main/assets/readme-banner.png)
+![Aetheric Banner](https://github.com/aetheric-oss/.github/raw/main/assets/readme-banner.png)
 
 # `svc-atc` Service
 
@@ -99,7 +99,7 @@ The following documents are relevant to this service:
 - [Concept of Operations](./docs/conops.md)
 - [Software Design Document](./docs/sdd.md)
 - [Interface Control Document (ICD)](./docs/icd.md)
-- [Requirements](https://nocodb.arrowair.com/dashboard/#/nc/view/1f06e270-d36d-41cb-85ea-25a5d5d60c77)
+- [Requirements](https://nocodb.aetheric.nl/dashboard/#/nc/view/1f06e270-d36d-41cb-85ea-25a5d5d60c77)
 
 ## :busts_in_silhouette: Arrow DAO
 Learn more about us:
