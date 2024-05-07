@@ -1,6 +1,6 @@
 [package]
-description = "Arrow air traffic control service gRPC server"
-keywords    = ["vtol", "server", "grpc", "rest", "atc"]       # max 5
+description = "Aetheric air traffic control service gRPC server"
+keywords    = ["vtol", "server", "grpc", "rest", "atc"]          # max 5
 name        = "svc-atc"
 version     = "0.1.1-develop.1"
 
@@ -29,7 +29,6 @@ stub_client = ["stub_backends"]
 anyhow       = "1.0"
 axum         = "0.6"
 cargo-husky  = "1"
-chrono       = { version = "0.4", features = ["serde"] }
 clap         = { version = "4.4", features = ["derive"] }
 config       = "0.13"
 dotenv       = "0.15"
@@ -48,7 +47,6 @@ tonic        = "0.10"
 tonic-health = "0.10"
 tower        = { version = "0.4", features = ["limit"] }
 tower-http   = { version = "0.4", features = ["cors", "trace"] }
-uuid         = { version = "1.8", features = ["v4"] }
 
 [dependencies.svc-storage-client-grpc]
 features = ["flight_plan", "flight_plan_parcel"]
