@@ -67,7 +67,6 @@ pub struct Cli {
 ///     shutdown_tx.send(()).expect("Could not stop server.");
 /// }
 /// ```
-#[cfg(not(tarpaulin_include))]
 pub async fn shutdown_signal(
     server: &str,
     shutdown_rx: Option<tokio::sync::oneshot::Receiver<()>>,
@@ -82,4 +81,31 @@ pub async fn shutdown_signal(
     }
 
     log::warn!("(shutdown_signal) server shutdown for [{}]", server);
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[tokio::test]
+    async fn test_server_shutdown() {
+        ut_info!("start");
+
+        let (shutdown_tx, shutdown_rx) = tokio::sync::oneshot::channel::<()>();
+        let (_, health_service) = tonic_health::server::health_reporter();
+        tokio::spawn(async move {
+            let _ = tonic::transport::Server::builder()
+                .add_service(health_service)
+                .serve_with_shutdown(
+                    "0.0.0.0:50051".parse().unwrap(),
+                    shutdown_signal("grpc", Some(shutdown_rx)),
+                )
+                .await;
+        });
+
+        // Send server the shutdown request
+        assert!(shutdown_tx.send(()).is_ok());
+
+        ut_info!("success");
+    }
 }

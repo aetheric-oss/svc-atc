@@ -11,7 +11,7 @@ use axum::{body::Bytes, extract::Extension, Json};
 use hyper::StatusCode;
 use lib_common::time::{Duration, Utc};
 use lib_common::uuid::to_uuid;
-// use std::fmt::{self, Display, Formatter};
+use std::fmt::{self, Display, Formatter};
 use svc_storage_client_grpc::prelude::*;
 
 // Provides a way to tell a caller if the service is healthy.
@@ -86,32 +86,32 @@ pub enum FlightPlanError {
     Path,
 }
 
-// impl Display for FlightPlanError {
-//     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
-//         match self {
-//             FlightPlanError::Data => write!(f, "could not get data from object."),
-//             FlightPlanError::OriginVertiportId => {
-//                 write!(f, "could not get origin_vertiport_id from data.")
-//             }
-//             FlightPlanError::TargetVertiportId => {
-//                 write!(f, "could not get target_vertiport_id from data.")
-//             }
-//             FlightPlanError::OriginTimeslotStart => {
-//                 write!(f, "could not get origin_timeslot_start from data.")
-//             }
-//             FlightPlanError::OriginTimeslotEnd => {
-//                 write!(f, "could not get origin_timeslot_end from data.")
-//             }
-//             FlightPlanError::TargetTimeslotStart => {
-//                 write!(f, "could not get target_timeslot_start from data.")
-//             }
-//             FlightPlanError::TargetTimeslotEnd => {
-//                 write!(f, "could not get target_timeslot_end from data.")
-//             }
-//             FlightPlanError::Path => write!(f, "could not get path from data."),
-//         }
-//     }
-// }
+impl Display for FlightPlanError {
+    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+        match self {
+            FlightPlanError::Data => write!(f, "could not get data from object."),
+            FlightPlanError::OriginVertiportId => {
+                write!(f, "could not get origin_vertiport_id from data.")
+            }
+            FlightPlanError::TargetVertiportId => {
+                write!(f, "could not get target_vertiport_id from data.")
+            }
+            FlightPlanError::OriginTimeslotStart => {
+                write!(f, "could not get origin_timeslot_start from data.")
+            }
+            FlightPlanError::OriginTimeslotEnd => {
+                write!(f, "could not get origin_timeslot_end from data.")
+            }
+            FlightPlanError::TargetTimeslotStart => {
+                write!(f, "could not get target_timeslot_start from data.")
+            }
+            FlightPlanError::TargetTimeslotEnd => {
+                write!(f, "could not get target_timeslot_end from data.")
+            }
+            FlightPlanError::Path => write!(f, "could not get path from data."),
+        }
+    }
+}
 
 impl TryFrom<flight_plan::Object> for FlightPlan {
     type Error = FlightPlanError;
@@ -162,9 +162,9 @@ impl TryFrom<flight_plan::Object> for FlightPlan {
             .points
             .iter()
             .map(|p| PointZ {
-                latitude: p.latitude,
-                longitude: p.longitude,
-                altitude_meters: p.altitude,
+                latitude: p.y,
+                longitude: p.x,
+                altitude_meters: p.z,
             })
             .collect();
 
@@ -247,7 +247,7 @@ pub async fn get_flight_plans(
 
     let now = Utc::now();
 
-    // TODO(R5): parameterize duration lookahead?
+    // TODO(R5): parameterize duration lookahead
     let delta = Duration::try_minutes(60).ok_or_else(|| {
         rest_error!("could not create duration.");
         StatusCode::INTERNAL_SERVER_ERROR

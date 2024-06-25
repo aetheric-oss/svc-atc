@@ -31,6 +31,7 @@ use utoipa::OpenApi;
     )
 )]
 #[cfg(not(tarpaulin_include))]
+// no_coverage: (Rnever) not unit testable
 pub struct ApiDoc;
 
 /// Errors with OpenAPI generation
@@ -88,5 +89,17 @@ mod tests {
         // struct InvalidApi;
         // let error = generate_openapi_spec::<InvalidApi>("test.json").unwrap_err();
         // assert_eq!(error, OpenApiError::Json);
+    }
+
+    #[test]
+    fn test_openapi_error_display() {
+        assert_eq!(
+            format!("{}", OpenApiError::Json),
+            "Failed to export as JSON string"
+        );
+        assert_eq!(
+            format!("{}", OpenApiError::FileWrite),
+            "Failed to write to file"
+        );
     }
 }

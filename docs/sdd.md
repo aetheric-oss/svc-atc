@@ -88,9 +88,9 @@ sequenceDiagram
     end
 ```
 
-## Common Actions
+### `plans`
 
-Attempt aircraft reroute
+Aircraft will request upcoming plans.
 
 ```mermaid
 sequenceDiagram
@@ -98,14 +98,10 @@ sequenceDiagram
     participant client as Networked Node
     participant service as svc-atc
     participant storage as svc-storage
-    client-->>service: (REST) POST /atc/ack/flight denied
-    alt Tier 1
-        service-->>scheduler: TODO(R5) Attempt Reroute
-    end
-    alt Tier 2
-        service-->>scheduler: Cancel flight
-    end
-    alt Tier 3
-        service-->>storage: Cancel flights
-    end
+    client-->>service: (REST) GET /atc/plans
+    service-->>storage: get upcoming flight_plans for aircraft
+    storage-->>service: plans
+    service-->>storage: get parcel data for each flight
+    storage-->>service: parcels
+    service-->>client: flight plans with parcel data
 ```

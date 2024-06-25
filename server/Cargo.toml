@@ -51,11 +51,11 @@ tower-http   = { version = "0.4", features = ["cors", "trace"] }
 [dependencies.svc-storage-client-grpc]
 features = ["flight_plan", "flight_plan_parcel"]
 git      = "https://github.com/aetheric-oss/svc-storage"
-tag      = "latest-develop"
+tag      = "v0.12.0"
 
 [dependencies.lib-common]
 git = "https://github.com/aetheric-oss/lib-common"
-tag = "latest-develop"
+tag = "v2.0.0"
 
 [dependencies.log4rs]
 features = [
