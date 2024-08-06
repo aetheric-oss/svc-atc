@@ -21,8 +21,9 @@ use utoipa::OpenApi;
         schemas(
             api::rest_types::AckRequest,
             api::rest_types::AckStatus,
-            api::rest_types::PointZ,
+            api::rest_types::Pose,
             api::rest_types::FlightPlan,
+            api::rest_types::Phase,
             api::rest_types::Cargo
         )
     ),

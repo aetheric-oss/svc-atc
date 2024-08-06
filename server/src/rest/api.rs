@@ -158,15 +158,22 @@ impl TryFrom<flight_plan::Object> for FlightPlan {
             FlightPlanError::Path
         })?;
 
-        let path = path
+        let mut phases = path
             .points
             .iter()
-            .map(|p| PointZ {
-                latitude: p.latitude,
-                longitude: p.longitude,
-                altitude_meters: p.altitude,
+            .map(|p| {
+                let pose = Pose {
+                    latitude: p.latitude,
+                    longitude: p.longitude,
+                    altitude_meters: p.altitude,
+                    heading_degrees: 0.,
+                };
+
+                Phase::NavigateTo((pose, MovementType::StartRotation))
             })
             .collect();
+
+        // phases.push_front(Phase::Takeoff(path.points[0]))
 
         let plan = FlightPlan {
             session_id: data.session_id,
@@ -180,7 +187,7 @@ impl TryFrom<flight_plan::Object> for FlightPlan {
             origin_timeslot_end: origin_timeslot_end.into(),
             target_timeslot_start: target_timeslot_start.into(),
             target_timeslot_end: target_timeslot_end.into(),
-            path,
+            phases,
             acquire: vec![],
             deliver: vec![],
         };

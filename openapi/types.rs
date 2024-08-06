@@ -26,7 +26,7 @@ pub enum AckStatus {
 /// Latitude, longitude, and altitude
 ///  following the WGS-84 standard
 #[derive(Debug, Copy, Clone, Serialize, Deserialize, ToSchema)]
-pub struct PointZ {
+pub struct Pose {
     /// Latitude
     pub latitude: f64,
 
@@ -34,7 +34,17 @@ pub struct PointZ {
     pub longitude: f64,
 
     /// Altitude in meters
-    pub altitude_meters: f64
+    pub altitude_meters: f64,
+
+    /// Heading with respect to true north
+    pub heading_degrees: f64
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, ToSchema)]
+pub enum MovementType {
+    StartRotation, // rotate to new pose, then commence navigation
+    EndRotation, // keep current pose, rotate at the end
+    Smooth, // transition from current pose to end pose gradually
 }
 
 /// Information about cargo being carried
@@ -45,6 +55,17 @@ pub struct Cargo {
 
     // /// Cargo weight in grams
     // pub weight_g: u32
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, ToSchema)]
+pub enum Phase {
+    Takeoff(Pose),
+    NavigateTo((Pose, MovementType)),
+    PrecisionLand(Pose),
+    BoxCapture(Pose), // combination precision landing, without touching down
+    BoxRelease(Pose), // combination precision landing, without touching down
+    CameraCapture(bool),
+    PauseSeconds(u16), // differs from a 'hold' which freezes the current phase
 }
 
 /// Flight Plan Information
@@ -84,7 +105,7 @@ pub struct FlightPlan {
     pub target_timeslot_end: DateTime<Utc>,
 
     /// Path
-    pub path: Vec<PointZ>,
+    pub phases: Vec<Phase>,
 
     /// Cargo to acquire
     pub acquire: Vec<Cargo>,

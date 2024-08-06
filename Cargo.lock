@@ -140,11 +140,32 @@ dependencies = [
 ]
 
 [[package]]
+name = "arrow-macros-core"
+version = "0.2.1-develop.4"
+source = "git+https://github.com/aetheric-oss/lib-common?branch=develop#c325691ec5ba51fa340f873a8ccd5a5bed19b7e2"
+dependencies = [
+ "proc-macro-error",
+ "proc-macro2",
+ "quote",
+ "syn 2.0.68",
+]
+
+[[package]]
 name = "arrow-macros-derive"
 version = "0.2.1-develop.4"
 source = "git+https://github.com/aetheric-oss/lib-common?tag=latest-develop#c325691ec5ba51fa340f873a8ccd5a5bed19b7e2"
 dependencies = [
- "arrow-macros-core",
+ "arrow-macros-core 0.2.1-develop.4 (git+https://github.com/aetheric-oss/lib-common?tag=latest-develop)",
+ "proc-macro-error",
+ "proc-macro2",
+]
+
+[[package]]
+name = "arrow-macros-derive"
+version = "0.2.1-develop.4"
+source = "git+https://github.com/aetheric-oss/lib-common?branch=develop#c325691ec5ba51fa340f873a8ccd5a5bed19b7e2"
+dependencies = [
+ "arrow-macros-core 0.2.1-develop.4 (git+https://github.com/aetheric-oss/lib-common?branch=develop)",
  "proc-macro-error",
  "proc-macro2",
 ]
@@ -1092,7 +1113,27 @@ name = "lib-common"
 version = "0.2.1-develop.4"
 source = "git+https://github.com/aetheric-oss/lib-common?tag=latest-develop#c325691ec5ba51fa340f873a8ccd5a5bed19b7e2"
 dependencies = [
- "arrow-macros-derive",
+ "arrow-macros-derive 0.2.1-develop.4 (git+https://github.com/aetheric-oss/lib-common?tag=latest-develop)",
+ "cargo-husky",
+ "chrono",
+ "chrono-tz",
+ "futures",
+ "log",
+ "log4rs",
+ "prost",
+ "prost-wkt-types",
+ "tokio",
+ "tonic",
+ "trybuild",
+ "uuid",
+]
+
+[[package]]
+name = "lib-common"
+version = "0.2.1-develop.4"
+source = "git+https://github.com/aetheric-oss/lib-common?branch=develop#c325691ec5ba51fa340f873a8ccd5a5bed19b7e2"
+dependencies = [
+ "arrow-macros-derive 0.2.1-develop.4 (git+https://github.com/aetheric-oss/lib-common?branch=develop)",
  "cargo-husky",
  "chrono",
  "chrono-tz",
@@ -2218,7 +2259,7 @@ dependencies = [
  "dotenv",
  "futures",
  "hyper",
- "lib-common",
+ "lib-common 0.2.1-develop.4 (git+https://github.com/aetheric-oss/lib-common?branch=develop)",
  "log",
  "log4rs",
  "logtest",
@@ -2245,7 +2286,7 @@ name = "svc-atc-client-grpc"
 version = "0.1.1-develop.3"
 dependencies = [
  "cfg-if",
- "lib-common",
+ "lib-common 0.2.1-develop.4 (git+https://github.com/aetheric-oss/lib-common?branch=develop)",
  "log",
  "logtest",
  "prost",
@@ -2263,7 +2304,7 @@ name = "svc-atc-client-rest"
 version = "0.1.1-develop.3"
 dependencies = [
  "hyper",
- "lib-common",
+ "lib-common 0.2.1-develop.4 (git+https://github.com/aetheric-oss/lib-common?branch=develop)",
  "serde",
  "serde_json",
  "tokio",
@@ -2273,7 +2314,7 @@ dependencies = [
 [[package]]
 name = "svc-storage"
 version = "0.11.1-develop.15"
-source = "git+https://github.com/aetheric-oss/svc-storage?tag=latest-develop#4adb5d05097206599fc35490cb12716121b0068b"
+source = "git+https://github.com/aetheric-oss/svc-storage?branch=develop#2cde738d298ba96ff969f89267b4e0dea50bd695"
 dependencies = [
  "anyhow",
  "byteorder",
@@ -2289,7 +2330,7 @@ dependencies = [
  "futures",
  "hyper",
  "lazy_static",
- "lib-common",
+ "lib-common 0.2.1-develop.4 (git+https://github.com/aetheric-oss/lib-common?tag=latest-develop)",
  "log",
  "log4rs",
  "native-tls",
@@ -2320,7 +2361,7 @@ dependencies = [
 [[package]]
 name = "svc-storage-client-grpc"
 version = "0.11.1-develop.15"
-source = "git+https://github.com/aetheric-oss/svc-storage?tag=latest-develop#4adb5d05097206599fc35490cb12716121b0068b"
+source = "git+https://github.com/aetheric-oss/svc-storage?branch=develop#2cde738d298ba96ff969f89267b4e0dea50bd695"
 dependencies = [
  "anyhow",
  "cfg-if",
@@ -2328,7 +2369,7 @@ dependencies = [
  "futures",
  "geo",
  "lazy_static",
- "lib-common",
+ "lib-common 0.2.1-develop.4 (git+https://github.com/aetheric-oss/lib-common?tag=latest-develop)",
  "log",
  "num-derive",
  "num-traits",
