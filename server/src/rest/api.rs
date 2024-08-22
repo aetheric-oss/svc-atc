@@ -226,10 +226,10 @@ pub async fn acknowledge_flight_plan(
         })
 }
 
-/// Get flight plans
+/// Get itineraries
 #[utoipa::path(
     get,
-    path = "/atc/plans",
+    path = "/atc/itineraries",
     tag = "svc-atc",
     request_body = String,
     responses(
@@ -237,12 +237,12 @@ pub async fn acknowledge_flight_plan(
         (status = 500, description = "Request unsuccessful."),
     )
 )]
-pub async fn get_flight_plans(
+pub async fn get_itineraries(
     Extension(grpc_clients): Extension<GrpcClients>,
-    aircraft_id: Bytes,
-) -> Result<Json<Vec<FlightPlan>>, StatusCode> {
+    request: PlanRequest,
+) -> Result<Json<Vec<Itinerary>>, StatusCode> {
     rest_debug!("entry.");
-    let aircraft_id = String::from_utf8(aircraft_id.to_vec()).map_err(|_| {
+    let aircraft_id = String::from_utf8(request.aircraft_id.to_vec()).map_err(|_| {
         rest_error!("could not convert aircraft_id to string.");
         StatusCode::BAD_REQUEST
     })?;

@@ -9,6 +9,8 @@ use lib_common::uuid::Uuid;
 use std::fmt;
 use svc_storage_client_grpc::prelude::*;
 
+pub mod plan;
+
 /// Error type for ack_flight
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub enum AckError {
