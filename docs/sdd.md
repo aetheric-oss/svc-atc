@@ -69,7 +69,7 @@ sequenceDiagram
     participant client as Networked Node
     participant service as svc-atc
     participant storage as svc-storage
-    client-->>service: (REST) POST /atc/ack/flight confirmed
+    client-->>service: (REST) POST /atc/acknowledge confirmed
     service-->>storage: Update flight_plan.carrier_ack = NOW()
 ```
 
@@ -79,8 +79,7 @@ sequenceDiagram
     autonumber
     participant client as Networked Node
     participant service as svc-atc
-    participant storage as svc-storage
-    client-->>service: (REST) POST /atc/ack/flight denied
+    client-->>service: (REST) POST /atc/acknowledge denied
     service-->>scheduler: TODO(R5) Attempt Reroute
     alt Reroute Fails
         scheduler->>service:: Failed
