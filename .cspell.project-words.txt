@@ -30,4 +30,11 @@ dotenv
 NocoDB
 autonumber
 logtest
-anstyle
+oneshot
+ilike
+vertipad
+timeslot
+seccomp
+Lcov
+rideshare
+Rnever

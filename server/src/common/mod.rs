@@ -4,21 +4,22 @@
 pub mod macros;
 
 use crate::grpc::client::GrpcClients;
-use chrono::Utc;
-use lib_common::grpc::ClientConnect;
-use prost_types::FieldMask;
+use lib_common::time::Utc;
+use lib_common::uuid::Uuid;
 use std::fmt;
-use svc_storage_client_grpc::prelude::flight_plan::Data as FpData;
-use svc_storage_client_grpc::prelude::flight_plan::UpdateObject as FpUpdate;
+use svc_storage_client_grpc::prelude::*;
 
 /// Error type for ack_flight
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, PartialEq)]
 pub enum AckError {
     /// Internal Error
     Internal,
 
     /// Dependencies not available
     Unavailable,
+
+    /// Flight Plan Not Found
+    NotFound,
 }
 
 impl fmt::Display for AckError {
@@ -26,46 +27,83 @@ impl fmt::Display for AckError {
         match self {
             AckError::Internal => write!(f, "Internal Error"),
             AckError::Unavailable => write!(f, "Dependencies not available"),
-            // AckError::Unauthorized => write!(f, "Unauthorized request"),
+            AckError::NotFound => write!(f, "Flight Plan Not Found"),
         }
     }
 }
 
 /// This request might come in over REST, or through GRPC someday
 ///  if another microservice has a software-hardware link to a radio antenna
-pub async fn ack_flight(fp_id: String, grpc_clients: &GrpcClients) -> Result<(), AckError> {
-    //
-    // TODO(R4) - Check that it came from authenticated source
-    //
+pub async fn ack_flight(fp_id: Uuid, grpc_clients: &GrpcClients) -> Result<(), AckError> {
+    let mut data = grpc_clients
+        .storage
+        .flight_plan
+        .get_by_id(Id {
+            id: fp_id.to_string(),
+        })
+        .await
+        .map_err(|e| {
+            common_error!("{}", e);
+            AckError::NotFound
+        })?
+        .into_inner()
+        .data
+        .ok_or_else(|| {
+            common_error!("Couldn't get data from object id: {}", fp_id);
+            AckError::Internal
+        })?;
+
+    data.carrier_ack = Some(Utc::now().into());
 
     //
     // Update the flight plan record to show that it has been acknowledged
     //
-    let request = tonic::Request::new(FpUpdate {
-        id: fp_id,
-        data: Some(FpData {
-            carrier_ack: Some(Utc::now().into()),
-            ..Default::default()
-        }),
+    let request = flight_plan::UpdateObject {
+        id: fp_id.to_string(),
+        data: Some(data),
         mask: Some(FieldMask {
             paths: vec!["carrier_ack".to_string()],
         }),
-    });
-
-    let Ok(mut client) = grpc_clients.storage.flight_plan.get_client().await else {
-        let error_msg = "svc-storage unavailable.".to_string();
-        common_error!("(acknowledge_flight_plan) {}", &error_msg);
-        return Err(AckError::Unavailable);
     };
 
-    //
-    // TODO(R4) - Push to queue and retry on failure
-    //
-    let Ok(_response) = client.update(request).await else {
-        let error_msg = "svc-storage failure.".to_string();
-        common_error!("(acknowledge_flight_plan) {}", &error_msg);
-        return Err(AckError::Internal);
-    };
+    grpc_clients
+        .storage
+        .flight_plan
+        .update(request)
+        .await
+        .map_err(|e| {
+            common_error!("{}", e);
+            AckError::Internal
+        })?;
 
     Ok(())
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[tokio::test]
+    async fn test_ack_flight() {
+        let fp_id = Uuid::new_v4();
+        let config = crate::config::Config::default();
+        let grpc_clients = GrpcClients::default(config);
+        let error = ack_flight(fp_id, &grpc_clients).await.unwrap_err();
+        assert_eq!(error, AckError::NotFound);
+
+        let data = flight_plan::mock::get_data_obj();
+        let fp_id = grpc_clients
+            .storage
+            .flight_plan
+            .insert(data)
+            .await
+            .unwrap()
+            .into_inner()
+            .object
+            .unwrap()
+            .id;
+
+        let fp_id = Uuid::parse_str(&fp_id).unwrap();
+        let _ = ack_flight(fp_id, &grpc_clients).await.unwrap();
+    }
 }
